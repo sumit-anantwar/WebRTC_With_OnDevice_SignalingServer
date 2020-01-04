@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="95e-b2-F5Z">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="gDL-le-6fp">
+            <objects>
+                <navigationController id="95e-b2-F5Z" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="qKQ-fo-ncW">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="DhP-dg-BKg"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vqW-bQ-34f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-235" y="113"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="TCP_Socket_POC" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4jk-2d-moF">
+                                <rect key="frame" x="132" y="425" width="150" height="40"/>
+                                <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="BEr-DL-7Go"/>
+                                    <constraint firstAttribute="height" constant="40" id="YQ2-lJ-JVl"/>
+                                </constraints>
+                                <state key="normal" title="Launch Server">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fn2-Sh-EjV">
+                                <rect key="frame" x="87" y="475" width="240" height="0.0"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" id="VIe-ST-tTY"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HVL-xd-jvF">
+                                <rect key="frame" x="132" y="485" width="150" height="40"/>
+                                <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Launch Client">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="fn2-Sh-EjV" firstAttribute="top" secondItem="4jk-2d-moF" secondAttribute="bottom" constant="10" id="3he-ib-8ka"/>
+                            <constraint firstItem="fn2-Sh-EjV" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="8K6-fw-83j"/>
+                            <constraint firstItem="4jk-2d-moF" firstAttribute="trailing" secondItem="HVL-xd-jvF" secondAttribute="trailing" id="M4z-qX-HEe"/>
+                            <constraint firstItem="HVL-xd-jvF" firstAttribute="height" secondItem="4jk-2d-moF" secondAttribute="height" id="Q6q-VA-4Vc"/>
+                            <constraint firstItem="4jk-2d-moF" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Wbn-Xf-kGq"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="fn2-Sh-EjV" secondAttribute="trailing" constant="87" id="XP2-R1-j1S"/>
+                            <constraint firstItem="HVL-xd-jvF" firstAttribute="top" secondItem="fn2-Sh-EjV" secondAttribute="bottom" constant="10" id="aOn-RU-PUQ"/>
+                            <constraint firstItem="fn2-Sh-EjV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="87" id="bnI-Xx-B3W"/>
+                            <constraint firstItem="4jk-2d-moF" firstAttribute="leading" secondItem="HVL-xd-jvF" secondAttribute="leading" id="z7L-xd-YqS"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Xdh-lX-r5w"/>
+                    <connections>
+                        <outlet property="launchClientButton" destination="HVL-xd-jvF" id="4ND-bT-7sk"/>
+                        <outlet property="launchServerButton" destination="4jk-2d-moF" id="pFT-UP-s46"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="578" y="113"/>
+        </scene>
+    </scenes>
+</document>
