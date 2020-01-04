@@ -152,16 +152,6 @@ extension ClientViewController : GCDAsyncSocketDelegate {
         } catch {
             print(error)
         }
-        
-//        if let string = String(data: data, encoding: .utf8) {
-//            Log.debug(message: string, event: .info)
-//
-//            if let hostSocket = self.hostSocket {
-//                let d = "Hello from Client!\r\n".data(using: .utf8)!
-//                hostSocket.write(d, withTimeout: -1, tag: 0)
-//                hostSocket.readData(to: GCDAsyncSocket.crlfData(), withTimeout: -1, tag: 0)
-//            }
-//        }
     }
     
 }

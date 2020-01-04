@@ -117,12 +117,6 @@ extension ServerViewController : GCDAsyncSocketDelegate {
         self.webRtcClient.connect { offerSdp in
             self.sendSDP(sessionDescription: offerSdp, to: newSocket)
         }
-        
-//
-//        let string = "Hello from the Server\r\n"
-//        let data = string.data(using: .utf8)!
-//        newSocket.write(data, withTimeout: -1, tag: 0)
-//        newSocket.readData(to: GCDAsyncSocket.crlfData(), withTimeout: -1, tag: 0)
     }
     
     func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {
@@ -140,15 +134,6 @@ extension ServerViewController : GCDAsyncSocketDelegate {
         } catch {
             print(error)
         }
-        
-//        if let string = String(data: data, encoding: .utf8) {
-//            Log.debug(message: string, event: .info)
-//
-//            let string = "Hello from the Server\r\n"
-//            let d = string.data(using: .utf8)!
-//            sock.write(d, withTimeout: -1, tag: 0)
-//            sock.readData(to: GCDAsyncSocket.crlfData(), withTimeout: -1, tag: 0)
-//        }
     }
 }
 
