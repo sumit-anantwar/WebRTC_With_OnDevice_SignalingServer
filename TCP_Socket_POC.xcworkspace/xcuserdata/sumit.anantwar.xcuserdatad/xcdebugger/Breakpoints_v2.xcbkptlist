@@ -7,207 +7,160 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "DF4869D5-1C34-44F5-A44C-14B32C979892"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TCP_Socket_POC/ViewControllers/Server/ServerViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "129"
-            endingLineNumber = "129"
-            landmarkName = "socket(_:didRead:withTag:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "DF4869D5-1C34-44F5-A44C-14B32C979892 - c4a5737139241c4c"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "TCP_Socket_POC.ServerViewController.socket(_: __C.GCDAsyncSocket, didRead: Foundation.Data, withTag: Swift.Int) -&gt; ()"
-                  moduleName = "TCP_Socket_POC"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Volumes/Data/OceanCurrent/POC/TCP_Socket_POC/TCP_Socket_POC/ViewControllers/Server/ServerViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "129"
-                  endingLineNumber = "129"
-                  offsetFromSymbolStart = "1265">
-               </Location>
-               <Location
-                  uuid = "DF4869D5-1C34-44F5-A44C-14B32C979892 - c4a5737139241c4c"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "TCP_Socket_POC.ServerViewController.socket(_: __C.GCDAsyncSocket, didRead: Foundation.Data, withTag: Swift.Int) -&gt; ()"
-                  moduleName = "TCP_Socket_POC"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Volumes/Data/OceanCurrent/POC/TCP_Socket_POC/TCP_Socket_POC/ViewControllers/Server/ServerViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "129"
-                  endingLineNumber = "129"
-                  offsetFromSymbolStart = "3174">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "6CC5C686-0524-4BE0-9E68-70A657CB6E6A"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TCP_Socket_POC/ViewControllers/Server/ServerViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
-            landmarkName = "socket(_:didRead:withTag:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "2350A5C3-4D07-49CA-A615-1B2A2A5F032D"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TCP_Socket_POC/ViewControllers/Client/ClientViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "145"
-            endingLineNumber = "145"
-            landmarkName = "socket(_:didRead:withTag:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "2350A5C3-4D07-49CA-A615-1B2A2A5F032D - 8146bf914d6b794"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "TCP_Socket_POC.ClientViewController.socket(_: __C.GCDAsyncSocket, didRead: Foundation.Data, withTag: Swift.Int) -&gt; ()"
-                  moduleName = "TCP_Socket_POC"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Volumes/Data/OceanCurrent/POC/TCP_Socket_POC/TCP_Socket_POC/ViewControllers/Client/ClientViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "145"
-                  endingLineNumber = "145"
-                  offsetFromSymbolStart = "1265">
-               </Location>
-               <Location
-                  uuid = "2350A5C3-4D07-49CA-A615-1B2A2A5F032D - 8146bf914d6b794"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "TCP_Socket_POC.ClientViewController.socket(_: __C.GCDAsyncSocket, didRead: Foundation.Data, withTag: Swift.Int) -&gt; ()"
-                  moduleName = "TCP_Socket_POC"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Volumes/Data/OceanCurrent/POC/TCP_Socket_POC/TCP_Socket_POC/ViewControllers/Client/ClientViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "145"
-                  endingLineNumber = "145"
-                  offsetFromSymbolStart = "3290">
-               </Location>
-               <Location
-                  uuid = "2350A5C3-4D07-49CA-A615-1B2A2A5F032D - c964ef307aefac71"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.RTCSessionDescription) -&gt; () in TCP_Socket_POC.ClientViewController.socket(_: __C.GCDAsyncSocket, didRead: Foundation.Data, withTag: Swift.Int) -&gt; ()"
-                  moduleName = "TCP_Socket_POC"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Volumes/Data/OceanCurrent/POC/TCP_Socket_POC/TCP_Socket_POC/ViewControllers/Client/ClientViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "146"
-                  endingLineNumber = "146"
-                  offsetFromSymbolStart = "34">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "790F9A6E-3C6F-4674-999F-BAB3058C54CF"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TCP_Socket_POC/ViewControllers/Client/ClientViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "149"
-            endingLineNumber = "149"
-            landmarkName = "socket(_:didRead:withTag:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "0BBF0411-B0D4-4E21-8B6D-86727E1E31F7"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TCP_Socket_POC/ViewControllers/Client/ClientViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "196"
-            endingLineNumber = "196"
-            landmarkName = "sendCandidate(iceCandidate:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "3F3FEDF4-D3A1-4596-A282-7A23B6BED601"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TCP_Socket_POC/ViewControllers/Server/ServerViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "174"
-            endingLineNumber = "174"
-            landmarkName = "sendCandidate(iceCandidate:to:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "8683BA4C-9BC7-496A-B096-635D58043013"
+            uuid = "94ADE31A-02A9-47EB-9991-0A16A11F38EB"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TCP_Socket_POC/ViewControllers/Server/ServerViewController.swift"
+            filePath = "TCP_Socket_POC/Utils/WebRTCClient.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
-            landmarkName = "sendSDP(sessionDescription:to:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "4454900F-44E4-48E4-8507-1FBF3190589D"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TCP_Socket_POC/ViewControllers/Client/ClientViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "180"
-            endingLineNumber = "180"
+            startingLineNumber = "281"
+            endingLineNumber = "281"
             landmarkName = "sendSDP(sessionDescription:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1178866B-F134-4A99-AB52-488261F09322"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TCP_Socket_POC/Utils/WebRTCClient.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "246"
+            endingLineNumber = "246"
+            landmarkName = "socket(_:didRead:withTag:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "1178866B-F134-4A99-AB52-488261F09322 - e529ac0a4bf57051"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TCP_Socket_POC.WebRTCClient.socket(_: __C.GCDAsyncSocket, didRead: Foundation.Data, withTag: Swift.Int) -&gt; ()"
+                  moduleName = "TCP_Socket_POC"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/Data/OceanCurrent/POC/TCP_Socket_POC/TCP_Socket_POC/Utils/WebRTCClient.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "249"
+                  endingLineNumber = "249"
+                  offsetFromSymbolStart = "968">
+               </Location>
+               <Location
+                  uuid = "1178866B-F134-4A99-AB52-488261F09322 - e529ac0a4bf57051"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TCP_Socket_POC.WebRTCClient.socket(_: __C.GCDAsyncSocket, didRead: Foundation.Data, withTag: Swift.Int) -&gt; ()"
+                  moduleName = "TCP_Socket_POC"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/Data/OceanCurrent/POC/TCP_Socket_POC/TCP_Socket_POC/Utils/WebRTCClient.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "249"
+                  endingLineNumber = "249"
+                  offsetFromSymbolStart = "2512">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7F03FADD-3F24-4003-A50E-0A943FF03B44"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TCP_Socket_POC/Utils/WebRTCClient.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "251"
+            endingLineNumber = "251"
+            landmarkName = "socket(_:didRead:withTag:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7F03FADD-3F24-4003-A50E-0A943FF03B44 - e529ac0a4bf57051"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TCP_Socket_POC.WebRTCClient.socket(_: __C.GCDAsyncSocket, didRead: Foundation.Data, withTag: Swift.Int) -&gt; ()"
+                  moduleName = "TCP_Socket_POC"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/Data/OceanCurrent/POC/TCP_Socket_POC/TCP_Socket_POC/Utils/WebRTCClient.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "254"
+                  endingLineNumber = "254"
+                  offsetFromSymbolStart = "1348">
+               </Location>
+               <Location
+                  uuid = "7F03FADD-3F24-4003-A50E-0A943FF03B44 - e529ac0a4bf57051"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TCP_Socket_POC.WebRTCClient.socket(_: __C.GCDAsyncSocket, didRead: Foundation.Data, withTag: Swift.Int) -&gt; ()"
+                  moduleName = "TCP_Socket_POC"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/Data/OceanCurrent/POC/TCP_Socket_POC/TCP_Socket_POC/Utils/WebRTCClient.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "254"
+                  endingLineNumber = "254"
+                  offsetFromSymbolStart = "2520">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D1E16AFA-484A-4E40-9540-C7022F56CF7E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TCP_Socket_POC/Utils/WebRTCClient.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "254"
+            endingLineNumber = "254"
+            landmarkName = "socket(_:didRead:withTag:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "03D7AFFE-EE76-4074-8520-456494C66F4F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TCP_Socket_POC/Utils/WebRTCClient.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
+            landmarkName = "connect()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D0DBA532-1D00-4159-8A80-ED42BFD13E57"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TCP_Socket_POC/Utils/WebRTCClient.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
+            landmarkName = "connect()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

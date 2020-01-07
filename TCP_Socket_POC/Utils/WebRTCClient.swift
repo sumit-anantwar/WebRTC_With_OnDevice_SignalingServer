@@ -2,17 +2,15 @@
 //  WebRTCClient.swift
 //  SimpleWebRTC
 //
-//  Created by n0 on 2019/01/06.
-//  Copyright © 2019年 n0. All rights reserved.
-//
 
 import UIKit
 import WebRTC
+import CocoaAsyncSocket
 
 protocol WebRTCClientDelegate {
-    func didGenerateCandidate(iceCandidate: RTCIceCandidate)
+//    func didGenerateCandidate(iceCandidate: RTCIceCandidate)
+//    func didOpenDataChannel()
     func didIceConnectionStateChanged(iceConnectionState: RTCIceConnectionState)
-    func didOpenDataChannel()
     func didReceiveData(data: Data)
     func didReceiveMessage(message: String)
     func didConnectWebRTC()
@@ -21,65 +19,61 @@ protocol WebRTCClientDelegate {
 
 class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCDataChannelDelegate {
 
-    private var peerConnectionFactory: RTCPeerConnectionFactory!
     private var peerConnection: RTCPeerConnection?
-    private var localAudioTrack: RTCAudioTrack!
+    
     private var localView: UIView!
     private var remoteView: UIView!
     private var remoteStream: RTCMediaStream?
     private var dataChannel: RTCDataChannel?
-    private var channels: (audio: Bool, datachannel: Bool) = (false, false)
-    private var customFrameCapturer: Bool = false
+    
+//    private var channels: (audio: Bool, datachannel: Bool) = (false, false)
     
     var delegate: WebRTCClientDelegate?
     public private(set) var isConnected: Bool = false
     
-    override init() {
+    private var isPresenter: Bool
+    private var socket: GCDAsyncSocket
+    private var peerConnectionFactory = RTCPeerConnectionFactory()
+    
+    private lazy var localAudioTrack: RTCAudioTrack = {
+        let audioConstrains = RTCMediaConstraints(mandatoryConstraints: nil, optionalConstraints: nil)
+        let audioSource = self.peerConnectionFactory.audioSource(with: audioConstrains)
+        let audioTrack = self.peerConnectionFactory.audioTrack(with: audioSource, trackId: "audio0")
+        
+        // audioTrack.source.volume = 10
+        return audioTrack
+    }()
+    
+    init(socket: GCDAsyncSocket, isPresenter: Bool = false) {
+        self.socket = socket
+        self.isPresenter = isPresenter
         super.init()
-        print("WebRTC Client initialize")
+        
+        self.socket.synchronouslySetDelegate(self)
+        self.socket.synchronouslySetDelegateQueue(DispatchQueue.main)
+        self.connect()
     }
     
     deinit {
         print("WebRTC Client Deinit")
-        self.peerConnectionFactory = nil
+//        self.peerConnectionFactory = nil
         self.peerConnection = nil
     }
     
-    // MARK: - Public functions
-    func setup(audioTrack: Bool, dataChannel: Bool, customFrameCapturer: Bool){
-        print("set up")
-        self.channels.audio = audioTrack
-        self.channels.datachannel = dataChannel
-        self.customFrameCapturer = customFrameCapturer
-        
-        self.peerConnectionFactory = RTCPeerConnectionFactory()
-        
-        setupLocalTracks()
-    }
-    
-    func setupLocalViewFrame(frame: CGRect){
-        localView.frame = frame
-    }
-    
-    func setupRemoteViewFrame(frame: CGRect){
-        remoteView.frame = frame
-    }
-    
     // MARK: Connect
-    func connect(onSuccess: @escaping (RTCSessionDescription) -> Void){
+    private func connect(){
         self.peerConnection = setupPeerConnection()
         self.peerConnection!.delegate = self
         
-        if self.channels.audio {
+        self.dataChannel = self.setupDataChannel()
+        self.dataChannel?.delegate = self
+        
+        if self.isPresenter {
             self.peerConnection!.add(localAudioTrack, streamIds: ["stream0"])
+            self.makeOffer { offerSdp in
+                self.sendSDP(sessionDescription: offerSdp)
+            }
         }
-        if self.channels.datachannel {
-            self.dataChannel = self.setupDataChannel()
-            self.dataChannel?.delegate = self
-        }
-        
-        
-        makeOffer(onSuccess: onSuccess)
     }
     
     // MARK: HangUp
@@ -96,14 +90,8 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCDataChannelDelegate 
             self.peerConnection = setupPeerConnection()
             self.peerConnection!.delegate = self
             
-            if self.channels.audio {
-                self.peerConnection!.add(localAudioTrack, streamIds: ["stream-0"])
-            }
-            if self.channels.datachannel {
-                self.dataChannel = self.setupDataChannel()
-                self.dataChannel?.delegate = self
-            }
-            
+            self.dataChannel = self.setupDataChannel()
+            self.dataChannel?.delegate = self
         }
         
         print("set remote description")
@@ -161,27 +149,9 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCDataChannelDelegate 
     // MARK: - Setup
     private func setupPeerConnection() -> RTCPeerConnection{
         let rtcConf = RTCConfiguration()
-//        rtcConf.iceServers = [RTCIceServer(urlStrings: ["stun:stun.l.google.com:19302"])]
         let mediaConstraints = RTCMediaConstraints.init(mandatoryConstraints: nil, optionalConstraints: nil)
         let pc = self.peerConnectionFactory.peerConnection(with: rtcConf, constraints: mediaConstraints, delegate: nil)
         return pc
-    }
-    
-    //MARK: - Local Media
-    private func setupLocalTracks(){
-        
-        if self.channels.audio == true {
-            self.localAudioTrack = createAudioTrack()
-        }
-    }
-    
-    private func createAudioTrack() -> RTCAudioTrack {
-        let audioConstrains = RTCMediaConstraints(mandatoryConstraints: nil, optionalConstraints: nil)
-        let audioSource = self.peerConnectionFactory.audioSource(with: audioConstrains)
-        let audioTrack = self.peerConnectionFactory.audioTrack(with: audioSource, trackId: "audio0")
-        
-        // audioTrack.source.volume = 10
-        return audioTrack
     }
     
     // MARK: - Local Data
@@ -264,6 +234,81 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCDataChannelDelegate 
     }
 }
 
+extension WebRTCClient : GCDAsyncSocketDelegate {
+    
+    func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {
+        guard let text = String(data: data, encoding: .utf8) else { return }
+        
+        do {
+            let signalingMessage = try JSONDecoder().decode(SignalingMessage.self, from: text.data(using: .utf8)!)
+            
+            if signalingMessage.type == "offer" {
+                let offerSdp = RTCSessionDescription(type: .offer, sdp: (signalingMessage.sessionDescription?.sdp)!)
+                self.receiveOffer(offerSDP: offerSdp, onCreateAnswer: { answerSDP in
+                    self.sendSDP(sessionDescription: answerSDP)
+                })
+            } else if signalingMessage.type == "answer" {
+                let answerSdp = RTCSessionDescription(type: .answer, sdp: (signalingMessage.sessionDescription?.sdp)!)
+                self.receiveAnswer(answerSDP: answerSdp)
+            } else if signalingMessage.type == "candidate" {
+                let candidate = signalingMessage.candidate!
+                self.receiveCandidate(candidate: RTCIceCandidate(sdp: candidate.sdp, sdpMLineIndex: candidate.sdpMLineIndex, sdpMid: candidate.sdpMid))
+            }
+        } catch {
+            print(error)
+        }
+    }
+}
+
+private extension WebRTCClient {
+    
+    func sendMessage(_ message: String) {
+        let terminatorString = "\r\n"
+        let messageToSend = "\(message)\(terminatorString)"
+        let data = messageToSend.data(using: .utf8)!
+        self.socket.write(data, withTimeout: -1, tag: 0)
+        self.socket.readData(to: GCDAsyncSocket.crlfData(), withTimeout: -1, tag: 0)
+    }
+    
+    func sendSDP(sessionDescription: RTCSessionDescription) {
+        var type = ""
+        if sessionDescription.type == .offer {
+            type = "offer"
+        } else if sessionDescription.type == .answer {
+            type = "answer"
+        }
+        
+        let sdp = SDP.init(sdp: sessionDescription.sdp)
+        let signalingMessage = SignalingMessage.init(type: type,
+                                                     sessionDescription: sdp,
+                                                     candidate: nil)
+        do {
+            let data = try JSONEncoder().encode(signalingMessage)
+            let message = String(data: data, encoding: String.Encoding.utf8)!
+            
+            self.sendMessage(message)
+            
+        } catch {
+            print(error)
+        }
+    }
+    
+    func sendCandidate(_ iceCandidate: RTCIceCandidate) {
+        let candidate = Candidate.init(sdp: iceCandidate.sdp, sdpMLineIndex: iceCandidate.sdpMLineIndex, sdpMid: iceCandidate.sdpMid!)
+        let signalingMessage = SignalingMessage.init(type: "candidate",
+                                                     sessionDescription: nil,
+                                                     candidate: candidate)
+        do {
+            let data = try JSONEncoder().encode(signalingMessage)
+            let message = String(data: data, encoding: String.Encoding.utf8)!
+            
+            self.sendMessage(message)
+        } catch {
+            print(error)
+        }
+    }
+}
+
 // MARK: - PeerConnection Delegeates
 extension WebRTCClient {
     func peerConnection(_ peerConnection: RTCPeerConnection, didChange stateChanged: RTCSignalingState) {
@@ -308,7 +353,7 @@ extension WebRTCClient {
     }
     
     func peerConnection(_ peerConnection: RTCPeerConnection, didGenerate candidate: RTCIceCandidate) {
-        self.delegate?.didGenerateCandidate(iceCandidate: candidate)
+        self.sendCandidate(candidate)
     }
     
     func peerConnection(_ peerConnection: RTCPeerConnection, didRemove stream: RTCMediaStream) {
@@ -316,7 +361,7 @@ extension WebRTCClient {
     }
     
     func peerConnection(_ peerConnection: RTCPeerConnection, didOpen dataChannel: RTCDataChannel) {
-        self.delegate?.didOpenDataChannel()
+//        self.delegate?.didOpenDataChannel()
     }
     
     func peerConnection(_ peerConnection: RTCPeerConnection, didRemove candidates: [RTCIceCandidate]) {}

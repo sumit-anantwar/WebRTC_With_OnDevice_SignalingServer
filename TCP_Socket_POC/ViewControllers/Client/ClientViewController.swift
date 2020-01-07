@@ -14,7 +14,6 @@ class ClientViewController: UIViewController {
     
     @IBOutlet var tableView: UITableView!
     
-    
     private var netServiceBrowser: NetServiceBrowser!
     private var serverService: NetService!
     private var currentServerService: NetService!
@@ -24,8 +23,6 @@ class ClientViewController: UIViewController {
     
     private var webRtcClient: WebRTCClient!
     private var hostSocket: GCDAsyncSocket!
-    
-    
 }
 // MARK: - ViewController LifeCycle
 extension ClientViewController {
@@ -51,10 +48,6 @@ private extension ClientViewController {
     }
     
     func startBrowser() {
-        self.webRtcClient = WebRTCClient()
-        self.webRtcClient.delegate = self
-        self.webRtcClient.setup(audioTrack: true, dataChannel: true, customFrameCapturer: false)
-        
         self.netServiceBrowser = NetServiceBrowser()
         self.netServiceBrowser.delegate = self
         self.netServiceBrowser.searchForServices(ofType: "_populi._tcp.", inDomain: "")
@@ -71,9 +64,6 @@ private extension ClientViewController {
 }
 
 extension ClientViewController : WebRTCClientDelegate {
-    func didGenerateCandidate(iceCandidate: RTCIceCandidate) {
-        self.sendCandidate(iceCandidate: iceCandidate)
-    }
     
     func didIceConnectionStateChanged(iceConnectionState: RTCIceConnectionState) {
         
@@ -100,7 +90,7 @@ extension ClientViewController : WebRTCClientDelegate {
     }
 }
 
-extension ClientViewController : NetServiceDelegate {
+extension ClientViewController : NetServiceDelegate, GCDAsyncSocketDelegate {
     
     func netServiceDidResolveAddress(_ sender: NetService) {
         guard let addresses = sender.addresses
@@ -109,12 +99,13 @@ extension ClientViewController : NetServiceDelegate {
         self.serverAddresses = addresses
         guard let addr = addresses.first else { return }
         
-        let socket = GCDAsyncSocket(delegate: self, delegateQueue: DispatchQueue.main)
-        socket.delegate = self
+        let socket = GCDAsyncSocket()
         do {
+            self.webRtcClient = WebRTCClient(socket: socket)
+            self.webRtcClient.delegate = self
+            
             try socket.connect(toAddress: addr)
             socket.readData(to: GCDAsyncSocket.crlfData(), withTimeout: -1, tag: 0)
-            self.hostSocket = socket
         } catch {
             return
         }
@@ -132,81 +123,6 @@ extension ClientViewController : NetServiceBrowserDelegate {
     }
 }
 
-extension ClientViewController : GCDAsyncSocketDelegate {
-    
-    func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {
-        
-        guard let text = String(data: data, encoding: .utf8) else { return }
-        
-        do {
-            let signalingMessage = try JSONDecoder().decode(SignalingMessage.self, from: text.data(using: .utf8)!)
-            
-            if signalingMessage.type == "offer" {
-                self.webRtcClient.receiveOffer(offerSDP: RTCSessionDescription(type: .offer, sdp: (signalingMessage.sessionDescription?.sdp)!), onCreateAnswer: {(answerSDP: RTCSessionDescription) -> Void in
-                    self.sendSDP(sessionDescription: answerSDP)
-                })
-            } else if signalingMessage.type == "candidate" {
-                let candidate = signalingMessage.candidate!
-                self.webRtcClient.receiveCandidate(candidate: RTCIceCandidate(sdp: candidate.sdp, sdpMLineIndex: candidate.sdpMLineIndex, sdpMid: candidate.sdpMid))
-            }
-        } catch {
-            print(error)
-        }
-    }
-    
-}
-
-private extension ClientViewController {
-    
-    func sendMessage(_ message: String) {
-        let terminatorString = "\r\n"
-        let messageToSend = "\(message)\(terminatorString)"
-        let data = messageToSend.data(using: .utf8)!
-        
-        if let socket = self.hostSocket {
-            socket.write(data, withTimeout: -1, tag: 0)
-            socket.readData(to: GCDAsyncSocket.crlfData(), withTimeout: -1, tag: 0)
-        }
-    }
-    
-    func sendSDP(sessionDescription: RTCSessionDescription) {
-        var type = ""
-        if sessionDescription.type == .offer {
-            type = "offer"
-        } else if sessionDescription.type == .answer {
-            type = "answer"
-        }
-        
-        let sdp = SDP.init(sdp: sessionDescription.sdp)
-        let signalingMessage = SignalingMessage.init(type: type,
-                                                     sessionDescription: sdp,
-                                                     candidate: nil)
-        do {
-            let data = try JSONEncoder().encode(signalingMessage)
-            let message = String(data: data, encoding: String.Encoding.utf8)!
-            
-            self.sendMessage(message)
-            
-        } catch {
-            print(error)
-        }
-    }
-    
-    func sendCandidate(iceCandidate: RTCIceCandidate) {
-        let candidate = Candidate.init(sdp: iceCandidate.sdp, sdpMLineIndex: iceCandidate.sdpMLineIndex, sdpMid: iceCandidate.sdpMid!)
-        let signalingMessage = SignalingMessage.init(type: "candidate",
-                                                     sessionDescription: nil,
-                                                     candidate: candidate)
-        do {
-            let data = try JSONEncoder().encode(signalingMessage)
-            let message = String(data: data, encoding: String.Encoding.utf8)!
-            
-            self.sendMessage(message)
-        } catch {
-            print(error)
-        }
-    }
-}
 
 extension ClientViewController : UITableViewDelegate, UITableViewDataSource {
     
@@ -238,4 +154,3 @@ extension ClientViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
 }
-

@@ -20,7 +20,7 @@ class ServerViewController: UIViewController {
     private var asyncSocketServer: GCDAsyncSocket!
     private var connectedSockets: [GCDAsyncSocket] = []
     
-    private var webRtcClient: WebRTCClient!
+    private var connectedClients: [WebRTCClient] = []
     private var tcpPort: UInt16!
 }
 
@@ -41,9 +41,7 @@ private extension ServerViewController {
         self.serverName.text = "Starting Server..."
         self.updateListenerCount()
         
-        self.webRtcClient = WebRTCClient()
-        self.webRtcClient.delegate = self
-        self.webRtcClient.setup(audioTrack: true, dataChannel: true, customFrameCapturer: false)
+//        self.webRtcClient.setup(audioTrack: true, dataChannel: true, customFrameCapturer: false)
         
         self.asyncSocketServer = GCDAsyncSocket(delegate: self, delegateQueue: DispatchQueue.main)
         if let server = self.asyncSocketServer {
@@ -77,10 +75,6 @@ private extension ServerViewController {
 }
 
 extension ServerViewController : WebRTCClientDelegate {
-    func didGenerateCandidate(iceCandidate: RTCIceCandidate) {
-        let socket = self.connectedSockets.first!
-        self.sendCandidate(iceCandidate: iceCandidate, to: socket)
-    }
     
     func didIceConnectionStateChanged(iceConnectionState: RTCIceConnectionState) {
         
@@ -114,77 +108,12 @@ extension ServerViewController : GCDAsyncSocketDelegate {
         self.connectedSockets.append(newSocket)
         self.updateListenerCount()
         
-        self.webRtcClient.connect { offerSdp in
-            self.sendSDP(sessionDescription: offerSdp, to: newSocket)
-        }
-    }
-    
-    func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {
-        guard let text = String(data: data, encoding: .utf8) else { return }
-        
-        do {
-            let signalingMessage = try JSONDecoder().decode(SignalingMessage.self, from: text.data(using: .utf8)!)
-            
-            if signalingMessage.type == "answer" {
-                self.webRtcClient.receiveAnswer(answerSDP: RTCSessionDescription(type: .answer, sdp: (signalingMessage.sessionDescription?.sdp)!))
-            }else if signalingMessage.type == "candidate" {
-                let candidate = signalingMessage.candidate!
-                self.webRtcClient.receiveCandidate(candidate: RTCIceCandidate(sdp: candidate.sdp, sdpMLineIndex: candidate.sdpMLineIndex, sdpMid: candidate.sdpMid))
-            }
-        } catch {
-            print(error)
-        }
+        let newClient = WebRTCClient(socket: newSocket, isPresenter: true)
+        self.connectedClients.append(newClient)
     }
 }
 
-private extension ServerViewController {
-    
-    func sendMessage(_ message: String, to socket: GCDAsyncSocket) {
-        let terminatorString = "\r\n"
-        let messageToSend = "\(message)\(terminatorString)"
-        let data = messageToSend.data(using: .utf8)!
-        socket.write(data, withTimeout: -1, tag: 0)
-        socket.readData(to: GCDAsyncSocket.crlfData(), withTimeout: -1, tag: 0)
-    }
-    
-    func sendSDP(sessionDescription: RTCSessionDescription, to socket: GCDAsyncSocket) {
-        var type = ""
-        if sessionDescription.type == .offer {
-            type = "offer"
-        } else if sessionDescription.type == .answer {
-            type = "answer"
-        }
-        
-        let sdp = SDP.init(sdp: sessionDescription.sdp)
-        let signalingMessage = SignalingMessage.init(type: type,
-                                                     sessionDescription: sdp,
-                                                     candidate: nil)
-        do {
-            let data = try JSONEncoder().encode(signalingMessage)
-            let message = String(data: data, encoding: String.Encoding.utf8)!
-            
-            self.sendMessage(message, to: socket)
-            
-        } catch {
-            print(error)
-        }
-    }
-    
-    func sendCandidate(iceCandidate: RTCIceCandidate, to socket: GCDAsyncSocket) {
-        let candidate = Candidate.init(sdp: iceCandidate.sdp, sdpMLineIndex: iceCandidate.sdpMLineIndex, sdpMid: iceCandidate.sdpMid!)
-        let signalingMessage = SignalingMessage.init(type: "candidate",
-                                                     sessionDescription: nil,
-                                                     candidate: candidate)
-        do {
-            let data = try JSONEncoder().encode(signalingMessage)
-            let message = String(data: data, encoding: String.Encoding.utf8)!
-            
-            self.sendMessage(message, to: socket)
-        } catch {
-            print(error)
-        }
-    }
-}
+
 
 extension ServerViewController : NetServiceDelegate {
     
