@@ -22,6 +22,8 @@ class ServerViewController: UIViewController {
     
     private var connectedClients: [WebRTCClient] = []
     private var tcpPort: UInt16!
+    
+    var audioPlayer: AudioPlayer?
 }
 
 extension ServerViewController {
@@ -29,9 +31,29 @@ extension ServerViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.audioPlayer = AudioPlayer()
         self.startServer()
     }
+}
+
+// MARK:- Action Methods -
+extension ServerViewController {
     
+    @IBAction func recordAudio(_ sender: UIButton) {
+        audioPlayer?.recordAudio(with: self.serverName.text!, userType: .presenter)
+    }
+    
+    @IBAction func stopRecording(_ sender: UIButton) {
+        audioPlayer?.stopRecording()
+    }
+    
+    @IBAction func playRecordedSound(_ sender: UIButton) {
+        audioPlayer?.playRecordedSound()
+    }
+    
+    @IBAction func stopPlaying(_ sender: UIButton) {
+        audioPlayer?.stopPlaying()
+    }
 }
 
 private extension ServerViewController {
