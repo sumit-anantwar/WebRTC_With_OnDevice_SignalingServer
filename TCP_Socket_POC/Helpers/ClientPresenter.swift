@@ -1,15 +1,17 @@
 //
-//  WebRTCClient.swift
-//  SimpleWebRTC
+//  ClientPresenter.swift
+//  TCP_Socket_POC
+//
+//  Created by Jayesh Mardiya on 18/01/20.
+//  Copyright © 2020 Sumit's Inc. All rights reserved.
 //
 
 import UIKit
 import WebRTC
 import CocoaAsyncSocket
 
-protocol WebRTCClientDelegate {
-//    func didGenerateCandidate(iceCandidate: RTCIceCandidate)
-//    func didOpenDataChannel()
+protocol ClientPresenterDelegate {
+    
     func didIceConnectionStateChanged(iceConnectionState: RTCIceConnectionState)
     func didReceiveData(data: Data)
     func didReceiveMessage(message: String)
@@ -17,21 +19,15 @@ protocol WebRTCClientDelegate {
     func didDisconnectWebRTC()
 }
 
-class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCDataChannelDelegate {
+class ClientPresenter: NSObject, RTCPeerConnectionDelegate, RTCDataChannelDelegate {
 
     private var peerConnection: RTCPeerConnection?
-    
-    private var localView: UIView!
-    private var remoteView: UIView!
     private var remoteStream: RTCMediaStream?
     private var dataChannel: RTCDataChannel?
     
-//    private var channels: (audio: Bool, datachannel: Bool) = (false, false)
-    
-    var delegate: WebRTCClientDelegate?
+    var delegate: ClientPresenterDelegate?
     public private(set) var isConnected: Bool = false
     
-    private var isPresenter: Bool
     private var socket: GCDAsyncSocket
     private var peerConnectionFactory = RTCPeerConnectionFactory()
     
@@ -39,14 +35,11 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCDataChannelDelegate 
         let audioConstrains = RTCMediaConstraints(mandatoryConstraints: nil, optionalConstraints: nil)
         let audioSource = self.peerConnectionFactory.audioSource(with: audioConstrains)
         let audioTrack = self.peerConnectionFactory.audioTrack(with: audioSource, trackId: "audio0")
-        
-        // audioTrack.source.volume = 10
         return audioTrack
     }()
     
-    init(socket: GCDAsyncSocket, isPresenter: Bool = false) {
+    init(socket: GCDAsyncSocket) {
         self.socket = socket
-        self.isPresenter = isPresenter
         super.init()
         
         self.socket.synchronouslySetDelegate(self)
@@ -56,36 +49,35 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCDataChannelDelegate 
     
     deinit {
         print("WebRTC Client Deinit")
-//        self.peerConnectionFactory = nil
         self.peerConnection = nil
     }
     
     // MARK: Connect
-    private func connect(){
+    private func connect() {
+        
         self.peerConnection = setupPeerConnection()
         self.peerConnection!.delegate = self
         
         self.dataChannel = self.setupDataChannel()
         self.dataChannel?.delegate = self
         
-        if self.isPresenter {
-            self.peerConnection!.add(localAudioTrack, streamIds: ["stream0"])
-            self.makeOffer { offerSdp in
-                self.sendSDP(sessionDescription: offerSdp)
-            }
+        self.peerConnection!.add(localAudioTrack, streamIds: ["stream0"])
+        self.makeOffer { offerSdp in
+            self.sendSDP(sessionDescription: offerSdp)
         }
     }
     
     // MARK: HangUp
-    func disconnect(){
+    func disconnect() {
         if self.peerConnection != nil{
             self.peerConnection!.close()
         }
     }
     
     // MARK: Signaling Event
-    func receiveOffer(offerSDP: RTCSessionDescription, onCreateAnswer: @escaping (RTCSessionDescription) -> Void){
-        if(self.peerConnection == nil){
+    func receiveOffer(offerSDP: RTCSessionDescription, onCreateAnswer: @escaping (RTCSessionDescription) -> Void) {
+        
+        if(self.peerConnection == nil) {
             print("offer received, create peerconnection")
             self.peerConnection = setupPeerConnection()
             self.peerConnection!.delegate = self
@@ -107,7 +99,8 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCDataChannelDelegate 
         }
     }
     
-    func receiveAnswer(answerSDP: RTCSessionDescription){
+    func receiveAnswer(answerSDP: RTCSessionDescription) {
+        
         self.peerConnection!.setRemoteDescription(answerSDP) { (err) in
             if let error = err {
                 print("failed to set remote answer SDP")
@@ -117,26 +110,27 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCDataChannelDelegate 
         }
     }
     
-    func receiveCandidate(candidate: RTCIceCandidate){
+    func receiveCandidate(candidate: RTCIceCandidate) {
         self.peerConnection!.add(candidate)
     }
     
     // MARK: DataChannel Event
-    func sendMessge(message: String){
+    func sendMessge(message: String) {
+        
         if let _dataChannel = self.dataChannel {
             if _dataChannel.readyState == .open {
                 let buffer = RTCDataBuffer(data: message.data(using: String.Encoding.utf8)!, isBinary: false)
                 _dataChannel.sendData(buffer)
-            }else {
+            } else {
                 
                 print("data channel is not ready state")
             }
-        }else{
+        } else {
             print("no data channel")
         }
     }
     
-    func sendData(data: Data){
+    func sendData(data: Data) {
         if let _dataChannel = self.dataChannel {
             if _dataChannel.readyState == .open {
                 let buffer = RTCDataBuffer(data: data, isBinary: true)
@@ -147,7 +141,7 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCDataChannelDelegate 
     
     // MARK: - Private functions
     // MARK: - Setup
-    private func setupPeerConnection() -> RTCPeerConnection{
+    private func setupPeerConnection() -> RTCPeerConnection {
         let rtcConf = RTCConfiguration()
         let mediaConstraints = RTCMediaConstraints.init(mandatoryConstraints: nil, optionalConstraints: nil)
         let pc = self.peerConnectionFactory.peerConnection(with: rtcConf, constraints: mediaConstraints, delegate: nil)
@@ -155,7 +149,8 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCDataChannelDelegate 
     }
     
     // MARK: - Local Data
-    private func setupDataChannel() -> RTCDataChannel{
+    private func setupDataChannel() -> RTCDataChannel {
+        
         let dataChannelConfig = RTCDataChannelConfiguration()
         dataChannelConfig.channelId = 0
         
@@ -184,12 +179,13 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCDataChannelDelegate 
                     onSuccess(offerSDP)
                 })
             }
-            
         }
     }
     
-    private func makeAnswer(onCreateAnswer: @escaping (RTCSessionDescription) -> Void){
+    private func makeAnswer(onCreateAnswer: @escaping (RTCSessionDescription) -> Void) {
+        
         self.peerConnection!.answer(for: RTCMediaConstraints(mandatoryConstraints: nil, optionalConstraints: nil), completionHandler: { (answerSessionDescription, err) in
+            
             if let error = err {
                 print("failed to create local answer SDP")
                 print(error)
@@ -213,7 +209,7 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCDataChannelDelegate 
     }
     
     // MARK: - Connection Events
-    private func onConnected(){
+    private func onConnected() {
         self.isConnected = true
         
         DispatchQueue.main.async {
@@ -221,7 +217,7 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCDataChannelDelegate 
         }
     }
     
-    private func onDisConnected(){
+    private func onDisConnected() {
         self.isConnected = false
         
         DispatchQueue.main.async {
@@ -234,7 +230,7 @@ class WebRTCClient: NSObject, RTCPeerConnectionDelegate, RTCDataChannelDelegate 
     }
 }
 
-extension WebRTCClient : GCDAsyncSocketDelegate {
+extension ClientPresenter : GCDAsyncSocketDelegate {
     
     func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {
         guard let text = String(data: data, encoding: .utf8) else { return }
@@ -260,7 +256,7 @@ extension WebRTCClient : GCDAsyncSocketDelegate {
     }
 }
 
-private extension WebRTCClient {
+private extension ClientPresenter {
     
     func sendMessage(_ message: String) {
         let terminatorString = "\r\n"
@@ -310,14 +306,14 @@ private extension WebRTCClient {
 }
 
 // MARK: - PeerConnection Delegeates
-extension WebRTCClient {
+extension ClientPresenter {
     func peerConnection(_ peerConnection: RTCPeerConnection, didChange stateChanged: RTCSignalingState) {
         var state = ""
-        if stateChanged == .stable{
+        if stateChanged == .stable {
             state = "stable"
         }
         
-        if stateChanged == .closed{
+        if stateChanged == .closed {
             state = "closed"
         }
         
@@ -346,7 +342,7 @@ extension WebRTCClient {
         print("did add stream")
         self.remoteStream = stream
         
-        if let audioTrack = stream.audioTracks.first{
+        if let audioTrack = stream.audioTracks.first {
             print("audio track faund")
             audioTrack.source.volume = 8
         }
@@ -371,18 +367,14 @@ extension WebRTCClient {
     func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceGatheringState) {}
 }
 
-// MARK: - RTCVideoView Delegate
-extension WebRTCClient{
-    
-}
-
 // MARK: - RTCDataChannelDelegate
-extension WebRTCClient {
+extension ClientPresenter {
+    
     func dataChannel(_ dataChannel: RTCDataChannel, didReceiveMessageWith buffer: RTCDataBuffer) {
         DispatchQueue.main.async {
             if buffer.isBinary {
                 self.delegate?.didReceiveData(data: buffer.data)
-            }else {
+            } else {
                 self.delegate?.didReceiveMessage(message: String(data: buffer.data, encoding: String.Encoding.utf8)!)
             }
         }

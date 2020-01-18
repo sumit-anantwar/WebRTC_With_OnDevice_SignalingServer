@@ -21,9 +21,10 @@ class ClientViewController: UIViewController {
     private var serverList: [NetService] = []
     private var serverAddresses: [Data] = []
     
-    private var webRtcClient: WebRTCClient!
+    private var webRtcClient: ClientListener!
     private var hostSocket: GCDAsyncSocket!
 }
+
 // MARK: - ViewController LifeCycle
 extension ClientViewController {
     
@@ -33,7 +34,6 @@ extension ClientViewController {
         self.uiSetup()
         self.startBrowser()
     }
-    
 }
 
 private extension ClientViewController {
@@ -59,11 +59,10 @@ private extension ClientViewController {
         
         server.delegate = self
         server.resolve(withTimeout: 5.0)
-        
     }
 }
 
-extension ClientViewController : WebRTCClientDelegate {
+extension ClientViewController : ClientListenerDelegate {
     
     func didIceConnectionStateChanged(iceConnectionState: RTCIceConnectionState) {
         
@@ -101,7 +100,7 @@ extension ClientViewController : NetServiceDelegate, GCDAsyncSocketDelegate {
         
         let socket = GCDAsyncSocket()
         do {
-            self.webRtcClient = WebRTCClient(socket: socket)
+            self.webRtcClient = ClientListener(socket: socket)
             self.webRtcClient.delegate = self
             
             try socket.connect(toAddress: addr)
@@ -109,7 +108,6 @@ extension ClientViewController : NetServiceDelegate, GCDAsyncSocketDelegate {
         } catch {
             return
         }
-        
     }
 }
 
@@ -152,5 +150,4 @@ extension ClientViewController : UITableViewDelegate, UITableViewDataSource {
         self.connectToServer(at: indexPath.row)
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    
 }

@@ -12,7 +12,6 @@
 		070F78F223BFFDCA0097EA7D /* Cell+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070F78F123BFFDCA0097EA7D /* Cell+Extensions.swift */; };
 		070F78F523C002870097EA7D /* Dictionary+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070F78F323C002850097EA7D /* Dictionary+Extensions.swift */; };
 		070F78F623C002870097EA7D /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070F78F423C002870097EA7D /* Array+Extensions.swift */; };
-		070F78F923C006760097EA7D /* WebRTCClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070F78F723C006760097EA7D /* WebRTCClient.swift */; };
 		070F78FA23C006760097EA7D /* WebRTCModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070F78F823C006760097EA7D /* WebRTCModels.swift */; };
 		07FE8A3923BFBE1D009CE736 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FE8A3823BFBE1D009CE736 /* AppDelegate.swift */; };
 		07FE8A3D23BFBE1D009CE736 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FE8A3C23BFBE1D009CE736 /* ViewController.swift */; };
@@ -27,6 +26,8 @@
 		07FE8A7023BFE0BF009CE736 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FE8A6F23BFE0BF009CE736 /* Log.swift */; };
 		07FE8A7523BFE13C009CE736 /* ServerViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07FE8A7423BFE13C009CE736 /* ServerViewController.storyboard */; };
 		07FE8A7723BFE16C009CE736 /* ClientViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07FE8A7623BFE16C009CE736 /* ClientViewController.storyboard */; };
+		1A020CC623D3284F009DA8B1 /* ClientPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A020CC423D3284F009DA8B1 /* ClientPresenter.swift */; };
+		1A020CC723D3284F009DA8B1 /* ClientListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A020CC523D3284F009DA8B1 /* ClientListener.swift */; };
 		1AA85EDF23C5E1000075C48D /* FileUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA85EDB23C5E0FF0075C48D /* FileUtils.swift */; };
 		1AA85EE023C5E1000075C48D /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA85EDC23C5E0FF0075C48D /* AudioPlayer.swift */; };
 		1AA85EE123C5E1000075C48D /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA85EDD23C5E1000075C48D /* String+Extensions.swift */; };
@@ -60,7 +61,6 @@
 		070F78F123BFFDCA0097EA7D /* Cell+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Cell+Extensions.swift"; sourceTree = "<group>"; };
 		070F78F323C002850097EA7D /* Dictionary+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+Extensions.swift"; sourceTree = "<group>"; };
 		070F78F423C002870097EA7D /* Array+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
-		070F78F723C006760097EA7D /* WebRTCClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebRTCClient.swift; sourceTree = "<group>"; };
 		070F78F823C006760097EA7D /* WebRTCModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebRTCModels.swift; sourceTree = "<group>"; };
 		07FE8A3523BFBE1D009CE736 /* TCP_Socket_POC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TCP_Socket_POC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07FE8A3823BFBE1D009CE736 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -82,6 +82,8 @@
 		07FE8A7423BFE13C009CE736 /* ServerViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ServerViewController.storyboard; sourceTree = "<group>"; };
 		07FE8A7623BFE16C009CE736 /* ClientViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ClientViewController.storyboard; sourceTree = "<group>"; };
 		1111E7FB714F9208878EC9B9 /* Pods-TCP_Socket_POC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TCP_Socket_POC.debug.xcconfig"; path = "Target Support Files/Pods-TCP_Socket_POC/Pods-TCP_Socket_POC.debug.xcconfig"; sourceTree = "<group>"; };
+		1A020CC423D3284F009DA8B1 /* ClientPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientPresenter.swift; sourceTree = "<group>"; };
+		1A020CC523D3284F009DA8B1 /* ClientListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientListener.swift; sourceTree = "<group>"; };
 		1AA85EDB23C5E0FF0075C48D /* FileUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileUtils.swift; sourceTree = "<group>"; };
 		1AA85EDC23C5E0FF0075C48D /* AudioPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		1AA85EDD23C5E1000075C48D /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 			children = (
 				07FE8A7123BFE0F7009CE736 /* ViewControllers */,
 				07FE8A6E23BFE09F009CE736 /* Utils */,
+				1A020CC323D3284F009DA8B1 /* Helpers */,
 				07FE8A3823BFBE1D009CE736 /* AppDelegate.swift */,
 				07FE8A3C23BFBE1D009CE736 /* ViewController.swift */,
 				07FE8A3E23BFBE1D009CE736 /* Main.storyboard */,
@@ -181,7 +184,6 @@
 		07FE8A6E23BFE09F009CE736 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				070F78F723C006760097EA7D /* WebRTCClient.swift */,
 				070F78F823C006760097EA7D /* WebRTCModels.swift */,
 				070F78F423C002870097EA7D /* Array+Extensions.swift */,
 				070F78F323C002850097EA7D /* Dictionary+Extensions.swift */,
@@ -223,6 +225,15 @@
 				070F78EF23BFFD960097EA7D /* ServerCell.swift */,
 			);
 			path = Client;
+			sourceTree = "<group>";
+		};
+		1A020CC323D3284F009DA8B1 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				1A020CC423D3284F009DA8B1 /* ClientPresenter.swift */,
+				1A020CC523D3284F009DA8B1 /* ClientListener.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		25AF2764AF7332A82A86581A /* Pods */ = {
@@ -490,7 +501,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A020CC623D3284F009DA8B1 /* ClientPresenter.swift in Sources */,
 				1AA85EE223C5E1000075C48D /* AudioService.swift in Sources */,
+				1A020CC723D3284F009DA8B1 /* ClientListener.swift in Sources */,
 				07FE8A6D23BFE086009CE736 /* UIStoryboard+Extensions.swift in Sources */,
 				070F78F623C002870097EA7D /* Array+Extensions.swift in Sources */,
 				07FE8A7023BFE0BF009CE736 /* Log.swift in Sources */,
@@ -503,7 +516,6 @@
 				1AA85EDF23C5E1000075C48D /* FileUtils.swift in Sources */,
 				1AA85EE123C5E1000075C48D /* String+Extensions.swift in Sources */,
 				070F78F023BFFD960097EA7D /* ServerCell.swift in Sources */,
-				070F78F923C006760097EA7D /* WebRTCClient.swift in Sources */,
 				07FE8A6923BFD4AE009CE736 /* ServerViewController.swift in Sources */,
 				1AA85EE023C5E1000075C48D /* AudioPlayer.swift in Sources */,
 			);

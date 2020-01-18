@@ -14,13 +14,12 @@ class ServerViewController: UIViewController {
     
     @IBOutlet var serverName: UILabel!
     @IBOutlet var listenerCount: UILabel!
-    
-    
+
     private var netService: NetService!
     private var asyncSocketServer: GCDAsyncSocket!
     private var connectedSockets: [GCDAsyncSocket] = []
     
-    private var connectedClients: [WebRTCClient] = []
+    private var connectedClients: [ClientPresenter] = []
     private var tcpPort: UInt16!
     
     var audioPlayer: AudioPlayer?
@@ -62,12 +61,12 @@ private extension ServerViewController {
         
         self.serverName.text = "Starting Server..."
         self.updateListenerCount()
-        
-//        self.webRtcClient.setup(audioTrack: true, dataChannel: true, customFrameCapturer: false)
-        
+
         self.asyncSocketServer = GCDAsyncSocket(delegate: self, delegateQueue: DispatchQueue.main)
+        
         if let server = self.asyncSocketServer {
             server.delegate = self
+            
             do {
                 try server.accept(onPort: 0)
             } catch {
@@ -93,10 +92,9 @@ private extension ServerViewController {
         let count = self.connectedSockets.count
         self.listenerCount.text = "Listeners: \(count)"
     }
-    
 }
 
-extension ServerViewController : WebRTCClientDelegate {
+extension ServerViewController : ClientPresenterDelegate {
     
     func didIceConnectionStateChanged(iceConnectionState: RTCIceConnectionState) {
         
@@ -130,18 +128,15 @@ extension ServerViewController : GCDAsyncSocketDelegate {
         self.connectedSockets.append(newSocket)
         self.updateListenerCount()
         
-        let newClient = WebRTCClient(socket: newSocket, isPresenter: true)
+        let newClient = ClientPresenter(socket: newSocket)
         self.connectedClients.append(newClient)
     }
 }
-
-
 
 extension ServerViewController : NetServiceDelegate {
     
     func netServiceDidPublish(_ sender: NetService) {
         Log.debug(message: "NetService did publish: \(sender.name)", event: .info)
-        
         self.serverName.text = sender.name
     }
     
@@ -153,4 +148,3 @@ extension ServerViewController : NetServiceDelegate {
         Log.debug(message: "NetService did stop", event: .info)
     }
 }
-
