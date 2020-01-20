@@ -91,16 +91,6 @@ class ClientListener: NSObject, RTCPeerConnectionDelegate, RTCDataChannelDelegat
         }
     }
     
-    func receiveAnswer(answerSDP: RTCSessionDescription) {
-        self.peerConnection!.setRemoteDescription(answerSDP) { (err) in
-            if let error = err {
-                print("failed to set remote answer SDP")
-                print(error)
-                return
-            }
-        }
-    }
-    
     func receiveCandidate(candidate: RTCIceCandidate) {
         self.peerConnection!.add(candidate)
     }
@@ -148,31 +138,6 @@ class ClientListener: NSObject, RTCPeerConnectionDelegate, RTCDataChannelDelegat
     }
     
     // MARK: - Signaling Offer/Answer
-    private func makeOffer(onSuccess: @escaping (RTCSessionDescription) -> Void) {
-        
-        self.peerConnection?.offer(for: RTCMediaConstraints.init(mandatoryConstraints: nil, optionalConstraints: nil)) { (sdp, err) in
-            if let error = err {
-                print("error with make offer")
-                print(error)
-                return
-            }
-            
-            if let offerSDP = sdp {
-                print("make offer, created local sdp")
-                self.peerConnection!.setLocalDescription(offerSDP, completionHandler: { (err) in
-                    if let error = err {
-                        print("error with set local offer sdp")
-                        print(error)
-                        return
-                    }
-                    print("succeed to set local offer SDP")
-                    onSuccess(offerSDP)
-                })
-            }
-            
-        }
-    }
-    
     private func makeAnswer(onCreateAnswer: @escaping (RTCSessionDescription) -> Void) {
         
         self.peerConnection!.answer(for: RTCMediaConstraints(mandatoryConstraints: nil, optionalConstraints: nil), completionHandler: { (answerSessionDescription, err) in
@@ -223,7 +188,7 @@ class ClientListener: NSObject, RTCPeerConnectionDelegate, RTCDataChannelDelegat
     }
 }
 
-extension ClientListener : GCDAsyncSocketDelegate {
+extension ClientListener: GCDAsyncSocketDelegate {
     
     func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {
         
@@ -237,9 +202,6 @@ extension ClientListener : GCDAsyncSocketDelegate {
                 self.receiveOffer(offerSDP: offerSdp, onCreateAnswer: { answerSDP in
                     self.sendSDP(sessionDescription: answerSDP)
                 })
-            } else if signalingMessage.type == "answer" {
-                let answerSdp = RTCSessionDescription(type: .answer, sdp: (signalingMessage.sessionDescription?.sdp)!)
-                self.receiveAnswer(answerSDP: answerSdp)
             } else if signalingMessage.type == "candidate" {
                 let candidate = signalingMessage.candidate!
                 self.receiveCandidate(candidate: RTCIceCandidate(sdp: candidate.sdp, sdpMLineIndex: candidate.sdpMLineIndex, sdpMid: candidate.sdpMid))
@@ -264,9 +226,7 @@ private extension ClientListener {
     func sendSDP(sessionDescription: RTCSessionDescription) {
         
         var type = ""
-        if sessionDescription.type == .offer {
-            type = "offer"
-        } else if sessionDescription.type == .answer {
+        if sessionDescription.type == .answer {
             type = "answer"
         }
         
