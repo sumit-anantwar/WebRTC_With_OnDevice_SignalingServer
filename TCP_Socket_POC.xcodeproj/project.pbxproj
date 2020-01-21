@@ -26,8 +26,11 @@
 		07FE8A7023BFE0BF009CE736 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FE8A6F23BFE0BF009CE736 /* Log.swift */; };
 		07FE8A7523BFE13C009CE736 /* ServerViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07FE8A7423BFE13C009CE736 /* ServerViewController.storyboard */; };
 		07FE8A7723BFE16C009CE736 /* ClientViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07FE8A7623BFE16C009CE736 /* ClientViewController.storyboard */; };
-		1A020CC623D3284F009DA8B1 /* ClientPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A020CC423D3284F009DA8B1 /* ClientPresenter.swift */; };
-		1A020CC723D3284F009DA8B1 /* ClientListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A020CC523D3284F009DA8B1 /* ClientListener.swift */; };
+		1A020CC623D3284F009DA8B1 /* ClientListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A020CC423D3284F009DA8B1 /* ClientListener.swift */; };
+		1A020CC723D3284F009DA8B1 /* ClientPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A020CC523D3284F009DA8B1 /* ClientPresenter.swift */; };
+		1A463A3523D6E23F006611A8 /* NetServiceServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A463A3423D6E23F006611A8 /* NetServiceServer.swift */; };
+		1A463A3723D6E24D006611A8 /* NetServerBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A463A3623D6E24D006611A8 /* NetServerBrowser.swift */; };
+		1AA3C7C223D59E7A000A04AD /* ClientBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA3C7C123D59E7A000A04AD /* ClientBase.swift */; };
 		1AA85EDF23C5E1000075C48D /* FileUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA85EDB23C5E0FF0075C48D /* FileUtils.swift */; };
 		1AA85EE023C5E1000075C48D /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA85EDC23C5E0FF0075C48D /* AudioPlayer.swift */; };
 		1AA85EE123C5E1000075C48D /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA85EDD23C5E1000075C48D /* String+Extensions.swift */; };
@@ -82,8 +85,11 @@
 		07FE8A7423BFE13C009CE736 /* ServerViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ServerViewController.storyboard; sourceTree = "<group>"; };
 		07FE8A7623BFE16C009CE736 /* ClientViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ClientViewController.storyboard; sourceTree = "<group>"; };
 		1111E7FB714F9208878EC9B9 /* Pods-TCP_Socket_POC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TCP_Socket_POC.debug.xcconfig"; path = "Target Support Files/Pods-TCP_Socket_POC/Pods-TCP_Socket_POC.debug.xcconfig"; sourceTree = "<group>"; };
-		1A020CC423D3284F009DA8B1 /* ClientPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientPresenter.swift; sourceTree = "<group>"; };
-		1A020CC523D3284F009DA8B1 /* ClientListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientListener.swift; sourceTree = "<group>"; };
+		1A020CC423D3284F009DA8B1 /* ClientListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientListener.swift; sourceTree = "<group>"; };
+		1A020CC523D3284F009DA8B1 /* ClientPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientPresenter.swift; sourceTree = "<group>"; };
+		1A463A3423D6E23F006611A8 /* NetServiceServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetServiceServer.swift; sourceTree = "<group>"; };
+		1A463A3623D6E24D006611A8 /* NetServerBrowser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetServerBrowser.swift; sourceTree = "<group>"; };
+		1AA3C7C123D59E7A000A04AD /* ClientBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientBase.swift; sourceTree = "<group>"; };
 		1AA85EDB23C5E0FF0075C48D /* FileUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileUtils.swift; sourceTree = "<group>"; };
 		1AA85EDC23C5E0FF0075C48D /* AudioPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		1AA85EDD23C5E1000075C48D /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
@@ -230,8 +236,11 @@
 		1A020CC323D3284F009DA8B1 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				1A020CC423D3284F009DA8B1 /* ClientPresenter.swift */,
-				1A020CC523D3284F009DA8B1 /* ClientListener.swift */,
+				1A020CC423D3284F009DA8B1 /* ClientListener.swift */,
+				1A020CC523D3284F009DA8B1 /* ClientPresenter.swift */,
+				1AA3C7C123D59E7A000A04AD /* ClientBase.swift */,
+				1A463A3423D6E23F006611A8 /* NetServiceServer.swift */,
+				1A463A3623D6E24D006611A8 /* NetServerBrowser.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -501,9 +510,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A020CC623D3284F009DA8B1 /* ClientPresenter.swift in Sources */,
+				1A020CC623D3284F009DA8B1 /* ClientListener.swift in Sources */,
 				1AA85EE223C5E1000075C48D /* AudioService.swift in Sources */,
-				1A020CC723D3284F009DA8B1 /* ClientListener.swift in Sources */,
+				1A020CC723D3284F009DA8B1 /* ClientPresenter.swift in Sources */,
+				1AA3C7C223D59E7A000A04AD /* ClientBase.swift in Sources */,
 				07FE8A6D23BFE086009CE736 /* UIStoryboard+Extensions.swift in Sources */,
 				070F78F623C002870097EA7D /* Array+Extensions.swift in Sources */,
 				07FE8A7023BFE0BF009CE736 /* Log.swift in Sources */,
@@ -516,7 +526,9 @@
 				1AA85EDF23C5E1000075C48D /* FileUtils.swift in Sources */,
 				1AA85EE123C5E1000075C48D /* String+Extensions.swift in Sources */,
 				070F78F023BFFD960097EA7D /* ServerCell.swift in Sources */,
+				1A463A3523D6E23F006611A8 /* NetServiceServer.swift in Sources */,
 				07FE8A6923BFD4AE009CE736 /* ServerViewController.swift in Sources */,
+				1A463A3723D6E24D006611A8 /* NetServerBrowser.swift in Sources */,
 				1AA85EE023C5E1000075C48D /* AudioPlayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

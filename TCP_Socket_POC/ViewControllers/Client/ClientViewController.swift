@@ -13,16 +13,8 @@ import WebRTC
 class ClientViewController: UIViewController {
     
     @IBOutlet var tableView: UITableView!
-    
-    private var netServiceBrowser: NetServiceBrowser!
-    private var serverService: NetService!
-    private var currentServerService: NetService!
-
+    let netServiceBrowser = NetServerBrowser()
     private var serverList: [NetService] = []
-    private var serverAddresses: [Data] = []
-    
-    private var webRtcClient: ClientListener!
-    private var hostSocket: GCDAsyncSocket!
 }
 
 // MARK: - ViewController LifeCycle
@@ -31,8 +23,17 @@ extension ClientViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.netServiceBrowser.delegate = self
         self.uiSetup()
-        self.startBrowser()
+    }
+}
+
+extension ClientViewController: NetServerBrowserDelegate {
+    
+    func didUpdateServiceList(serviceList: [NetService]) {
+        
+        self.serverList = serviceList
+        self.tableView.reloadData()
     }
 }
 
@@ -46,83 +47,9 @@ private extension ClientViewController {
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 40
     }
-    
-    func startBrowser() {
-        self.netServiceBrowser = NetServiceBrowser()
-        self.netServiceBrowser.delegate = self
-        self.netServiceBrowser.searchForServices(ofType: "_populi._tcp.", inDomain: "")
-    }
-    
-    func connectToServer(at index: Int) {
-        guard let server = self.serverList.item(at: index)
-        else { return }
-        
-        server.delegate = self
-        server.resolve(withTimeout: 5.0)
-    }
 }
 
-extension ClientViewController : ClientListenerDelegate {
-    
-    func didIceConnectionStateChanged(iceConnectionState: RTCIceConnectionState) {
-        
-    }
-    
-    func didOpenDataChannel() {
-        
-    }
-    
-    func didReceiveData(data: Data) {
-        
-    }
-    
-    func didReceiveMessage(message: String) {
-        
-    }
-    
-    func didConnectWebRTC() {
-        
-    }
-    
-    func didDisconnectWebRTC() {
-        
-    }
-}
-
-extension ClientViewController : NetServiceDelegate, GCDAsyncSocketDelegate {
-    
-    func netServiceDidResolveAddress(_ sender: NetService) {
-        guard let addresses = sender.addresses
-            else { return }
-        
-        self.serverAddresses = addresses
-        guard let addr = addresses.first else { return }
-        
-        let socket = GCDAsyncSocket()
-        do {
-            self.webRtcClient = ClientListener(socket: socket)
-            self.webRtcClient.delegate = self
-            
-            try socket.connect(toAddress: addr)
-            socket.readData(to: GCDAsyncSocket.crlfData(), withTimeout: -1, tag: 0)
-        } catch {
-            return
-        }
-    }
-}
-
-// MARK: - NetServiceBrowserDelegate
-extension ClientViewController : NetServiceBrowserDelegate {
-    
-    func netServiceBrowser(_ browser: NetServiceBrowser, didFind service: NetService, moreComing: Bool) {
-        Log.debug(message: "Browser did find Service: \(service.name)", event: .info)
-        self.serverList.append(service)
-        self.tableView.reloadData()
-    }
-}
-
-
-extension ClientViewController : UITableViewDelegate, UITableViewDataSource {
+extension ClientViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -147,7 +74,7 @@ extension ClientViewController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        self.connectToServer(at: indexPath.row)
+        self.netServiceBrowser.connectToServer(at: indexPath.row)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
