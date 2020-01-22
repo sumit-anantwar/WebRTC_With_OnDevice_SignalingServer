@@ -58,7 +58,7 @@
 		070F78F423C002870097EA7D /* Array+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		070F78F723C006760097EA7D /* WebRTCClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebRTCClient.swift; sourceTree = "<group>"; };
 		070F78F823C006760097EA7D /* WebRTCModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebRTCModels.swift; sourceTree = "<group>"; };
-		07FE8A3523BFBE1D009CE736 /* TCP_Socket_POC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TCP_Socket_POC.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		07FE8A3523BFBE1D009CE736 /* VoW_POC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VoW_POC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07FE8A3823BFBE1D009CE736 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		07FE8A3C23BFBE1D009CE736 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		07FE8A3F23BFBE1D009CE736 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -130,7 +130,7 @@
 		07FE8A3623BFBE1D009CE736 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				07FE8A3523BFBE1D009CE736 /* TCP_Socket_POC.app */,
+				07FE8A3523BFBE1D009CE736 /* VoW_POC.app */,
 				07FE8A4B23BFBE30009CE736 /* TCP_Socket_POCTests.xctest */,
 				07FE8A5623BFBE30009CE736 /* TCP_Socket_POCUITests.xctest */,
 			);
@@ -255,7 +255,7 @@
 			);
 			name = TCP_Socket_POC;
 			productName = TCP_Socket_POC;
-			productReference = 07FE8A3523BFBE1D009CE736 /* TCP_Socket_POC.app */;
+			productReference = 07FE8A3523BFBE1D009CE736 /* VoW_POC.app */;
 			productType = "com.apple.product-type.application";
 		};
 		07FE8A4A23BFBE30009CE736 /* TCP_Socket_POCTests */ = {
@@ -663,8 +663,9 @@
 			baseConfigurationReference = 1111E7FB714F9208878EC9B9 /* Pods-TCP_Socket_POC.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Y8GQF5LA2N;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Support Vox (TRZ59QABDX)";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 5X2Z273F8A;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = TCP_Socket_POC/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -672,8 +673,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.sumitanantwar.TCP-Socket-POC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.voxtours.-";
+				PRODUCT_NAME = VoW_POC;
+				PROVISIONING_PROFILE_SPECIFIER = POC_DEV;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -684,8 +686,9 @@
 			baseConfigurationReference = 9EB37DEBED15C905FFAD39E0 /* Pods-TCP_Socket_POC.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Y8GQF5LA2N;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 5X2Z273F8A;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = TCP_Socket_POC/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -693,8 +696,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.sumitanantwar.TCP-Socket-POC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.voxtours.-";
+				PRODUCT_NAME = VoW_POC;
+				PROVISIONING_PROFILE_SPECIFIER = POC_ADHOC;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

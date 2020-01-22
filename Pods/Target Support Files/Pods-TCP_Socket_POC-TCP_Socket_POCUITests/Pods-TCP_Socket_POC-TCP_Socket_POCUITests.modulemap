@@ -1,6 +1,0 @@
-framework module Pods_TCP_Socket_POC_TCP_Socket_POCUITests {
-  umbrella header "Pods-TCP_Socket_POC-TCP_Socket_POCUITests-umbrella.h"
-
-  export *
-  module * { export * }
-}

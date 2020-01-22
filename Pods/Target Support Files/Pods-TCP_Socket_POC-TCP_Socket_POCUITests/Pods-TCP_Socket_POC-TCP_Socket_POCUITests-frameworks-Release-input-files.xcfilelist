@@ -1,8 +1,0 @@
-${PODS_ROOT}/Target Support Files/Pods-TCP_Socket_POC-TCP_Socket_POCUITests/Pods-TCP_Socket_POC-TCP_Socket_POCUITests-frameworks.sh
-${BUILT_PRODUCTS_DIR}/CocoaAsyncSocket/CocoaAsyncSocket.framework
-${PODS_ROOT}/GoogleWebRTC/Frameworks/frameworks/WebRTC.framework
-${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework
-${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework
-${BUILT_PRODUCTS_DIR}/RxReachability/RxReachability.framework
-${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework
-${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework
