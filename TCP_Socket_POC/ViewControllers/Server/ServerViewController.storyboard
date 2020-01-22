@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="KxN-OM-z69">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="KxN-OM-z69">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,23 +17,94 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mNe-Na-lSb">
-                                <rect key="frame" x="186" y="144" width="42" height="21"/>
+                                <rect key="frame" x="186" y="144" width="42" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5oT-5h-nO3">
-                                <rect key="frame" x="186" y="192" width="42" height="21"/>
+                                <rect key="frame" x="186" y="191.5" width="42" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="U9y-CW-GpW">
+                                <rect key="frame" x="52" y="403" width="310" height="90"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ada-oN-w2s">
+                                        <rect key="frame" x="0.0" y="0.0" width="150" height="90"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xDZ-nq-hK1">
+                                                <rect key="frame" x="0.0" y="0.0" width="150" height="40"/>
+                                                <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="150" id="DOj-LB-f1b"/>
+                                                    <constraint firstAttribute="height" constant="40" id="RM0-qn-EFs"/>
+                                                </constraints>
+                                                <state key="normal" title="Start Record">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="recordAudio:" destination="KxN-OM-z69" eventType="touchUpInside" id="LEY-xz-b4M"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x1J-gw-gAO">
+                                                <rect key="frame" x="0.0" y="50" width="150" height="40"/>
+                                                <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" title="Stop Record">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="stopRecording:" destination="KxN-OM-z69" eventType="touchUpInside" id="UjY-CN-R8d"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="x1J-gw-gAO" firstAttribute="height" secondItem="xDZ-nq-hK1" secondAttribute="height" id="UXH-1g-K9t"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="4Lj-rA-Jo3">
+                                        <rect key="frame" x="160" y="0.0" width="150" height="90"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lgr-C1-JTW">
+                                                <rect key="frame" x="0.0" y="0.0" width="150" height="40"/>
+                                                <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="KAD-K1-f6n"/>
+                                                    <constraint firstAttribute="width" constant="150" id="SYH-oq-3Iy"/>
+                                                </constraints>
+                                                <state key="normal" title="Start Play">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="playRecordedSound:" destination="KxN-OM-z69" eventType="touchUpInside" id="YVK-QT-vIe"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UmH-YH-pe4">
+                                                <rect key="frame" x="0.0" y="50" width="150" height="40"/>
+                                                <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" title="Stop Play">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="stopPlaying:" destination="KxN-OM-z69" eventType="touchUpInside" id="TtE-YQ-Nrl"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="UmH-YH-pe4" firstAttribute="height" secondItem="lgr-C1-JTW" secondAttribute="height" id="Qoy-a5-aat"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="mNe-Na-lSb" firstAttribute="top" secondItem="5ax-ma-Hg4" secondAttribute="top" constant="100" id="0Xb-i9-1Rl"/>
                             <constraint firstItem="5oT-5h-nO3" firstAttribute="top" secondItem="mNe-Na-lSb" secondAttribute="bottom" constant="27" id="I8S-xT-GSf"/>
                             <constraint firstItem="5oT-5h-nO3" firstAttribute="centerX" secondItem="5ax-ma-Hg4" secondAttribute="centerX" id="M8J-sj-5Tt"/>
+                            <constraint firstItem="U9y-CW-GpW" firstAttribute="centerX" secondItem="Hon-bc-R9z" secondAttribute="centerX" id="Ues-AH-GoV"/>
+                            <constraint firstItem="U9y-CW-GpW" firstAttribute="centerY" secondItem="Hon-bc-R9z" secondAttribute="centerY" id="ieV-6F-xxf"/>
                             <constraint firstItem="mNe-Na-lSb" firstAttribute="centerX" secondItem="5ax-ma-Hg4" secondAttribute="centerX" id="u71-1e-rzk"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="5ax-ma-Hg4"/>
